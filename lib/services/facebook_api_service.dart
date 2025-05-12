@@ -29,21 +29,21 @@ class FacebookApiService {
     }
   }
 
-  Future<List<FacebookPost>> getPagePosts(
-      String pageId, String pageAccessToken) async {
+  Future<FacebookPost> getPagePosts(
+      String pageAccessToken, String pageId) async {
     try {
       final response = await http.get(
         Uri.parse(
-            '$_baseUrl/$pageId/posts?fields=full_picture&access_token=$pageAccessToken'),
+          'https://graph.facebook.com/$pageId/posts?fields=full_picture&limit=4&access_token=$pageAccessToken',
+        ),
       );
-
       if (response.statusCode == 200) {
+        print(response.body);
         final data = json.decode(response.body);
-        final List<dynamic> postsData = data['data'];
-        return postsData
-            .where((post) => post['full_picture'] != null)
-            .map((post) => FacebookPost.fromJson(post))
-            .toList();
+
+        return data['data'] != null
+            ? FacebookPost.fromJson(data)
+            : FacebookPost(data: []);
       } else {
         throw Exception('Failed to load posts: ${response.statusCode}');
       }

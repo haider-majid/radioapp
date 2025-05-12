@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildSocialIcon(String asset, String url,
-      {Color? color, double size = 36}) {
+      {Color? color, double size = 30}) {
     return IconButton(
       icon: Image.asset(asset, width: size, height: size, color: color),
       onPressed: () => _launchURL(url),
@@ -94,31 +94,22 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: const Color(0xFFEF4A2B),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             // Top section with banner and logo
             Column(
               children: [
-                const SizedBox(height: 16),
+                const SizedBox(height: 4),
                 const FacebookBannerWidget(),
-                const SizedBox(height: 16),
-                Image.asset('assets/logo.jpg', width: 80),
-                const SizedBox(height: 8),
-                const Text(
-                  'صوت السلام',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+                const SizedBox(height: 4),
+                Image.asset(
+                  'assets/logo.jpg',
+                  height: 60,
                 ),
-                const SizedBox(height: 24),
               ],
             ),
 
             // White bottom section
             Container(
-              width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(
@@ -139,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 4),
                   const Text(
                     'Radio live',
                     style: TextStyle(
@@ -147,12 +138,12 @@ class _HomePageState extends State<HomePage> {
                       fontSize: 18,
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 4),
 
                   // Play button
                   Container(
-                    width: 120,
-                    height: 120,
+                    width: 100,
+                    height: 100,
                     decoration: BoxDecoration(
                       color: const Color(0x1AEF4A2B),
                       shape: BoxShape.circle,
@@ -185,7 +176,7 @@ class _HomePageState extends State<HomePage> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 10),
 
                   // Social icons
                   Row(
@@ -213,7 +204,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
                 ],
               ),
             ),
@@ -240,7 +230,7 @@ class WaveformPainter extends CustomPainter {
     for (int i = 0; i < barCount; i++) {
       final x = i * barWidth * 1.5;
       final barHeight =
-          (size.height / 2) * (0.5 + 0.5 * (i % 2 == 0 ? 1 : 0.7));
+          (size.height / 1) * (0.5 + 0.5 * (i % 2 == 0 ? 1 : 0.7));
       canvas.drawLine(
         Offset(x, size.height),
         Offset(x, size.height - barHeight),

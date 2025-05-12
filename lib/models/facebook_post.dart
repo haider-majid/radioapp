@@ -1,16 +1,45 @@
 class FacebookPost {
-  final String? fullPicture;
-  final String id;
+  List<Data>? data;
 
-  FacebookPost({
-    this.fullPicture,
-    required this.id,
-  });
+  FacebookPost({this.data});
 
-  factory FacebookPost.fromJson(Map<String, dynamic> json) {
-    return FacebookPost(
-      fullPicture: json['full_picture'] as String?,
-      id: json['id'] as String,
-    );
+  FacebookPost.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(Data.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+
+    return data;
+  }
+}
+
+class Data {
+  String? fullPicture;
+  String? message;
+  String? id;
+
+  Data({this.fullPicture, this.message, this.id});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    fullPicture = json['full_picture'];
+    message = json['message'];
+    id = json['id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['full_picture'] = fullPicture;
+    data['message'] = message;
+    data['id'] = id;
+    return data;
   }
 }

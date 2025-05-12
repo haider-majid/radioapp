@@ -4,7 +4,7 @@ import '../services/facebook_api_service.dart';
 
 class FacebookBannerController extends GetxController {
   final FacebookApiService _apiService;
-  final RxList<FacebookPost> bannerImages = <FacebookPost>[].obs;
+  FacebookPost bannerImages = FacebookPost().obs();
   final RxBool isLoading = false.obs;
   final RxString error = ''.obs;
 
@@ -24,11 +24,15 @@ class FacebookBannerController extends GetxController {
         throw Exception('No Facebook pages found');
       }
 
-      // Get posts from the first page (you can modify this to use a specific page)
-      final page = pages[3];
-      final posts = await _apiService.getPagePosts(page.id, page.accessToken);
+      final page = pages.firstWhere(
+        (page) => page.name == "اذاعة صوت السلام - بغديدي",
+        orElse: () => throw Exception('Page not found'),
+      );
 
-      bannerImages.value = posts;
+      // Get posts from the selected page
+      final posts = await _apiService.getPagePosts(page.accessToken, page.id);
+
+      bannerImages = posts.obs();
     } catch (e) {
       error.value = e.toString();
     } finally {

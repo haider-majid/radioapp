@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:radioapp/screen/home_page.dart';
 import 'package:get/get.dart';
+import 'package:radioapp/screen/splash_page.dart';
 import 'controllers/facebook_banner_controller.dart';
 import 'services/facebook_api_service.dart';
 import 'services/facebook_token_manager.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // await dotenv.load(fileName: ".env");
+
   // Initialize token manager
   final tokenManager = Get.put(FacebookTokenManager());
 
@@ -32,7 +35,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Arial',
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const SplashPage(),
     );
   }
 }

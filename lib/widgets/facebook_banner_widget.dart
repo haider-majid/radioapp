@@ -35,7 +35,8 @@ class FacebookBannerWidget extends StatelessWidget {
         );
       }
 
-      if (controller.bannerImages.isEmpty) {
+      if (controller.bannerImages.data == null ||
+          controller.bannerImages.data!.isEmpty) {
         return Container(
           height: 200,
           color: const Color(0xFFEF4A2B),
@@ -47,20 +48,19 @@ class FacebookBannerWidget extends StatelessWidget {
           ),
         );
       }
-
       return Container(
-        height: 200,
+        height: MediaQuery.of(context).size.height * 0.5,
         decoration: const BoxDecoration(
           color: Color(0xFFEF4A2B),
         ),
         child: ListView.builder(
-          scrollDirection:
-              Axis.horizontal, // اجعل الاتجاه أفقي ليكون مثل السلايدر
-          itemCount: controller.bannerImages.length,
+          scrollDirection: Axis.horizontal,
+          itemCount: controller.bannerImages.data!.length,
           itemBuilder: (context, index) {
-            final post = controller.bannerImages[index];
+            final bannerImage = controller.bannerImages.data![index];
+
             return Container(
-              width: 300, // حدد عرض كل عنصر
+              width: 400,
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
@@ -74,9 +74,9 @@ class FacebookBannerWidget extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: post.fullPicture != null
+                child: bannerImage.fullPicture != null
                     ? Image.network(
-                        post.fullPicture!,
+                        bannerImage.fullPicture ?? '',
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return Container(
